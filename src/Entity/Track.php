@@ -54,7 +54,7 @@ class Track
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Album")
+     * @ORM\ManyToOne(targetEntity="Album",inversedBy="tracks")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="album", referencedColumnName="id")
      * })

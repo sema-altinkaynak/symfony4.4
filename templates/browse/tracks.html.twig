@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>{{ albums.getArtist().getName() }} {{ albums.getName() }}</h1>
+    <ul>
+        {% for element in albums.getTracks() %}
+            <li>{{ element.getSong().getName() }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
+
+
+

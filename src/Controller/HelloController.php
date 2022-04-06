@@ -19,9 +19,13 @@ class HelloController extends AbstractController
     #[Route('/hello/{name}/{times}', name: 'manytimes',requirements: ["times"=>"\d+"])]
     public function helloManyTimes(string $name, int $times=2) : Response
     {
+        if(0==$times || $times>10){
+            return $this->redirectToRoute('/hello/{name}/{times}',array("name"=>$name,"times"=>3));
+        }
         return $this->render('hello/hellomanytimes.html.twig',array(
             "name"=>$name,
             "times"=>$times
         ));
     }
+
 }

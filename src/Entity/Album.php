@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Album
  *
  * @ORM\Table(name="album", indexes={@ORM\Index(name="cover", columns={"cover"}), @ORM\Index(name="genre", columns={"genre"}), @ORM\Index(name="artist", columns={"artist"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\AlbumRepository")
  */
 class Album
 {
@@ -38,7 +40,7 @@ class Album
     /**
      * @var Artist
      *
-     * @ORM\ManyToOne(targetEntity="Artist")
+     * @ORM\ManyToOne(targetEntity="Artist",inversedBy="albums")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="artist", referencedColumnName="id")
      * })
@@ -64,6 +66,19 @@ class Album
      * })
      */
     private $cover;
+
+    /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="Track",mappedBy="album")
+     */
+    private $tracks;
+
+    public function __construct()
+    {
+        $this->tracks = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -129,6 +144,38 @@ class Album
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Track>
+     */
+    public function getTracks(): Collection
+    {
+        return $this->tracks;
+    }
+
+    public function addTrack(Track $track): self
+    {
+        if (!$this->tracks->contains($track)) {
+            $this->tracks[] = $track;
+            $track->setAlbum($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrack(Track $track): self
+    {
+        if ($this->tracks->removeElement($track)) {
+            // set the owning side to null (unless already changed)
+            if ($track->getAlbum() === $this) {
+                $track->setAlbum(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 
 
 }

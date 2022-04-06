@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <h1>Liste les artistes</h1>
+    <ul>
+        {% for tuple in artists %}
+            <li><a href="{{ path('album', {artistId: tuple.getId()}) }}">{{ tuple.getName() }}</a></li>
+        {% endfor %}
+    </ul>
+
+
+{% endblock %}
+
+
+

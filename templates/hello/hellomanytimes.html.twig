@@ -2,9 +2,6 @@
 
 {% block body %}
 <h1>Hello many times!</h1>
-    {% if times==0 or times>=10%}
-        {% set times=3 %}
-    {% endif %}
     {% for i in 0..times %}
         <p>{{ name }}</p><br>
     {% endfor %}

@@ -17,5 +17,6 @@ class HelloControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertCount(3, $client->getCrawler()->filter('p'));
+
     }
 }

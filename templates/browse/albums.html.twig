@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <h1>Liste des albums de {{ artiste.getName() }} </h1>
+    <ul>
+        {% for album in artiste.getAlbums() %}
+            <li><a href="{{ path("tracks",{id:album.getId() }) }}">{{ album.getName() }}</a></li>
+        {% endfor %}
+        {% if artiste.getAlbums()|length ==0 %}
+            <li>Aucun album</li>
+        {% endif %}
+    </ul>
+{% endblock %}
+
+
+
